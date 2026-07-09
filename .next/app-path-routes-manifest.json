@@ -1,8 +1,9 @@
 {
+  "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
-  "/favicon.ico/route": "/favicon.ico",
-  "/contact/page": "/contact",
   "/blog/page": "/blog",
+  "/contact/page": "/contact",
+  "/favicon.ico/route": "/favicon.ico",
   "/page": "/",
   "/works/page": "/works"
 }
