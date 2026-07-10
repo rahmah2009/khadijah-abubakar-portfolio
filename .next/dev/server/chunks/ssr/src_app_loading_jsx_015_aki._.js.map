@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///home/l2e/Desktop/khadijah-abubakar-portfolio/src/app/loading.jsx"],"sourcesContent":["import React from 'react'\n\nconst Loading = () => {\n  return (\n    <div className='text-[grey]'>loading....</div>\n  )\n}\n\nexport default Loading\n"],"names":["Loading","className"],"mappings":";;;;;AAAA;;;AAEA,MAAMA,UAAU;IACd,qBACE,8OAAC;QAAIC,WAAU;kBAAc;;;;;;AAEjC;uCAEeD"}}]
-}
