@@ -1,58 +1,116 @@
-'use client'
-import Link from 'next/link'
-import { RxHamburgerMenu } from "react-icons/rx";
-import React, { useState } from 'react'
+'use client';
+
+import Link from 'next/link';
+import React, { useState, useRef, useEffect } from 'react';
 
 const HeaderComponent = () => {
     const [toggleMobileNav, setToggleMobileNav] = useState(false);
+    const menuRef = useRef(null);
 
     const handleToggleMobileNav = () => {
-        setToggleMobileNav(!toggleMobileNav)
-    }
+        setToggleMobileNav((prev) => !prev);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setToggleMobileNav(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+        };
+    }, []);
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-[9999] bg-white flex items-center h-[86px] px-6 sm:px-10">
-            <div className='w-full flex items-center justify-start'>
-                <Link className='text-[#21243D] text-xl font-bold cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/'>KHA<span className='text-[purple] hover:text-[#6366F1] transition-colors duration-200'>DIJAH</span></Link>
+        <header className="relative z-50 w-full max-w-[1000px] mx-auto flex items-center justify-end h-[86px] px-6 sm:px-10">
+            {/* Logo */}
+            <div className="w-full flex items-center justify-start">
+                <Link
+                    href="/"
+                    className="text-[#21243D] text-xl font-bold hover:text-[#6366F1] transition-colors duration-200"
+                >
+                    KHA
+                    <span className="text-purple-600 hover:text-[#6366F1] transition-colors duration-200">
+                        DIJAH
+                    </span>
+                </Link>
             </div>
 
-            <div className="flex sm:hidden items-center justify-end relative">
+            {/* Mobile Menu */}
+            <div
+                ref={menuRef}
+                className="flex-1 sm:hidden flex justify-end relative"
+            >
                 <button
                     type="button"
-                    onClick={() => {
-                        alert("Button clicked");
-                        handleToggleMobileNav();
-                    }}
+                    onClick={handleToggleMobileNav}
                     className="relative z-50 p-2"
                 >
-                    ☰
+                    <span className="text-3xl font-bold">☰</span>
                 </button>
 
-                {
-                    toggleMobileNav && (
-                        <div className='w-[280px] p-6 absolute top-12 right-0 z-50 bg-white rounded-lg shadow-xl border border-purple-50/50'>
-                            <nav className='w-full flex flex-col items-center justify-center gap-6'>
-                                {/* Swapped hover:text-[red] for theme purple across all routing endpoints */}
-                                {/* <Link onClick={() => setToggleMobileNav(false)} className='text-[#21243D] text-lg font-semibold cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/'>Home</Link> */}
-                                <Link onClick={() => setToggleMobileNav(false)} className='text-[#21243D] text-lg font-semibold cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/works'>Works</Link>
-                                <Link onClick={() => setToggleMobileNav(false)} className='text-[#21243D] text-lg font-semibold cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/blog'>Blog</Link>
-                                <Link onClick={() => setToggleMobileNav(false)} className='text-[#21243D] text-lg font-semibold cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/contact'>Contact</Link>
-                            </nav>
-                        </div>
-                    )
-                }
+                {toggleMobileNav && (
+                    <div className="absolute top-12 right-0 w-[280px] p-6 bg-white rounded-lg shadow-xl border border-purple-100 z-50">
+                        <nav className="flex flex-col items-center gap-6">
+                            <Link
+                                href="/works"
+                                onClick={() => setToggleMobileNav(false)}
+                                className="text-[#21243D] text-lg font-semibold hover:text-[#6366F1] transition-colors duration-200"
+                            >
+                                Works
+                            </Link>
+
+                            <Link
+                                href="/blog"
+                                onClick={() => setToggleMobileNav(false)}
+                                className="text-[#21243D] text-lg font-semibold hover:text-[#6366F1] transition-colors duration-200"
+                            >
+                                Blog
+                            </Link>
+
+                            <Link
+                                href="/contact"
+                                onClick={() => setToggleMobileNav(false)}
+                                className="text-[#21243D] text-lg font-semibold hover:text-[#6366F1] transition-colors duration-200"
+                            >
+                                Contact
+                            </Link>
+                        </nav>
+                    </div>
+                )}
             </div>
 
-            <nav className='w-[280px] hidden sm:flex items-center justify-between gap-2'>
-                {/* Replaced old text color and red hover configurations with premium purple framework styles */}
-                {/* <Link className='text-[#21243D] text-xl font-medium cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/'>Home</Link> */}
-                <Link className='text-[#21243D] text-xl font-medium cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/works'>Works</Link>
-                <Link className='text-[#21243D] text-xl font-medium cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/blog'>Blog</Link>
-                <Link className='text-[#21243D] text-xl font-medium cursor-pointer hover:text-[#6366F1] transition-colors duration-200' href='/contact'>Contact</Link>
+            {/* Desktop Menu */}
+            <nav className="hidden sm:flex w-[280px] items-center justify-between gap-2">
+                <Link
+                    href="/works"
+                    className="text-[#21243D] text-xl font-medium hover:text-[#6366F1] transition-colors duration-200"
+                >
+                    Works
+                </Link>
+
+                <Link
+                    href="/blog"
+                    className="text-[#21243D] text-xl font-medium hover:text-[#6366F1] transition-colors duration-200"
+                >
+                    Blog
+                </Link>
+
+                <Link
+                    href="/contact"
+                    className="text-[#21243D] text-xl font-medium hover:text-[#6366F1] transition-colors duration-200"
+                >
+                    Contact
+                </Link>
             </nav>
-
         </header>
-    )
-}
+    );
+};
 
-export default HeaderComponent
+export default HeaderComponent;
