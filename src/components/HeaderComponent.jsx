@@ -19,7 +19,10 @@ const HeaderComponent = () => {
             <div className="flex sm:hidden items-center justify-end relative">
                 <button
                     type="button"
-                    onClick={handleToggleMobileNav}
+                    onClick={() => {
+                        alert("Button clicked");
+                        handleToggleMobileNav();
+                    }}
                     className="relative z-50 p-2"
                 >
                     ☰
